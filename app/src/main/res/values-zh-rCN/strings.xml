@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">反向视频</string>
+    <string name="action_settings">设置</string>
+    <string name="action_reverse">反向</string>
+    <string name="result_reverse_fail">我去，反向失败 -:(</string>
+    <string name="result_reverse_ok">恭喜，反向成功 -:)</string>
+    <string name="video_path">视频文件路径：%1$s</string>
+    <string name="more">更多</string>
+    <string name="op_view">查看</string>
+    <string name="op_share">分享</string>
+    <string name="updating_media_store">更新媒体数据库</string>
+    <string name="picker_name">选择一个视频</string>
+    <string name="my_reverse">我的反向视频</string>
+    <string name="video_length">长度: %1$s</string>
+</resources>

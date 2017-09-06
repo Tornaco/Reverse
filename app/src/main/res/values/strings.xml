@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Reverse</string>
+    <string name="title_activity_tab">TabActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="action_reverse">Reverse</string>
+    <string name="result_reverse_fail">Reverse fail</string>
+    <string name="result_reverse_ok">Reverse success</string>
+    <string name="video_path">Video path: %1$s</string>
+    <string name="more">More</string>
+    <string name="op_view">View</string>
+    <string name="op_share">Share</string>
+    <string name="updating_media_store">Updating media store</string>
+    <string name="picker_name">Pick video</string>
+    <string name="my_reverse">Reversed</string>
+    <string name="video_length">Length: %1$s</string>
+</resources>

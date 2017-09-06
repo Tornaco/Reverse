@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="more_options">
+        <item>@string/op_view</item>
+        <item>@string/op_share</item>
+    </string-array>
+</resources>
