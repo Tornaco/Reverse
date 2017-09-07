@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">@color/teal</color>
-    <color name="colorPrimaryDark">@color/teal_dark</color>
+    <color name="colorPrimary">@color/brown</color>
+    <color name="colorPrimaryDark">@color/brown_dark</color>
     <color name="colorAccent">@color/amber</color>
     <color name="primary_text">#212121</color>
     <color name="secondary_text">#757575</color>

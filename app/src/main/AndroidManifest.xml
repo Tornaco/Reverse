@@ -31,7 +31,10 @@
 
         <activity
             android:name=".SettingsActivity"
-            android:label="@string/action_settings" />
+            android:label="@string/action_settings">
+            <action android:name="github.tornaco.reverse.activities.SettingsActivity" />
+            <category android:name="android.intent.category.DEFAULT" />
+        </activity>
 
         <provider
             android:name="android.support.v4.content.FileProvider"

@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">逆视频</string>
     <string name="action_settings">设置</string>
-    <string name="action_reverse">逆</string>
-    <string name="result_reverse_fail">我去，逆失败 -:(</string>
-    <string name="result_reverse_ok">恭喜，逆成功 -:)</string>
+    <string name="action_reverse">Reverse</string>
+    <string name="result_reverse_fail">我去，Reverse失败 -:(</string>
+    <string name="result_reverse_ok">恭喜，Reverse成功 -:)</string>
     <string name="video_path">视频文件路径：%1$s</string>
     <string name="more">更多</string>
     <string name="op_view">查看</string>
@@ -17,6 +17,7 @@
     <string name="delete_fail">无法删除该视频</string>
     <string name="ready_to_reverse">随时可以开始Reverse</string>
     <string name="not_ready_to_reverse">糟糕的错误:(</string>
-    <string name="reverse_audio">Reverse声音</string>
-    <string name="open_source">Open source</string>
+    <string name="reverse_audio">Reverse音频</string>
+    <string name="open_source">开放源代码</string>
+    <string name="others">其他</string>
 </resources>

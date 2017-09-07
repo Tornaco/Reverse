@@ -436,15 +436,15 @@ public class MyRevActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.action_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
         }
-        if (item.getItemId() == R.id.open_source) {
-            Intent intent = new Intent();
-            intent.setAction("android.intent.action.VIEW");
-            // HARD CODE @FIXME
-            Uri content_url = Uri.parse("https://github.com/Tornaco/Reverse");
-            intent.setData(content_url);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-        }
+//        if (item.getItemId() == R.id.open_source) {
+//            Intent intent = new Intent();
+//            intent.setAction("android.intent.action.VIEW");
+//            // HARD CODE @FIXME
+//            Uri content_url = Uri.parse("https://github.com/Tornaco/Reverse");
+//            intent.setData(content_url);
+//            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            startActivity(intent);
+//        }
 
         return super.onOptionsItemSelected(item);
     }

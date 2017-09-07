@@ -1,6 +1,9 @@
 package github.tornaco.reverse;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
@@ -43,6 +46,20 @@ public class SettingsActivity extends AppCompatActivity {
         public void onCreate(@Nullable Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.settings);
+            findPreference(getString(R.string.action_reverse))
+                    .setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                        @Override
+                        public boolean onPreferenceClick(Preference preference) {
+                            Intent intent = new Intent();
+                            intent.setAction("android.intent.action.VIEW");
+                            // HARD CODE @FIXME
+                            Uri content_url = Uri.parse("https://github.com/Tornaco/Reverse");
+                            intent.setData(content_url);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                            return true;
+                        }
+                    });
         }
     }
 }

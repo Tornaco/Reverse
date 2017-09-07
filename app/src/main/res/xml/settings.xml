@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/action_settings">
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="reverse_audio"
+            android:title="@string/reverse_audio" />
+    </PreferenceCategory>
 
-    <CheckBoxPreference
-        android:defaultValue="false"
-        android:key="reverse_audio"
-        android:title="@string/reverse_audio" />
+    <PreferenceCategory android:title="@string/others">
+        <Preference
+            android:key="@string/action_reverse"
+            android:title="@string/open_source" />
+    </PreferenceCategory>
 </PreferenceScreen>
