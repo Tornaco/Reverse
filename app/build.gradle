@@ -43,7 +43,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support:cardview-v7:26.+'
     compile 'com.android.support:recyclerview-v7:26.+'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.github.Tornaco:FFMpeg-Android-Java:1.0-BETA'
     compile 'com.github.Tornaco:Logger:1.1.2'
     compile 'com.google.guava:guava:20.0'
