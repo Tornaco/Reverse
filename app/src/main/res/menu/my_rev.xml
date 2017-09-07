@@ -7,4 +7,10 @@
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/open_source"
+        android:title="@string/open_source"
+        app:showAsAction="never" />
+
 </menu>

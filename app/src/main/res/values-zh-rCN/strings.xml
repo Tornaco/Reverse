@@ -18,4 +18,5 @@
     <string name="ready_to_reverse">随时可以开始Reverse</string>
     <string name="not_ready_to_reverse">糟糕的错误:(</string>
     <string name="reverse_audio">Reverse声音</string>
+    <string name="open_source">Open source</string>
 </resources>

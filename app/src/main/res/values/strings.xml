@@ -20,4 +20,5 @@
     <string name="ready_to_reverse">Ready to reverse</string>
     <string name="not_ready_to_reverse">Something error:(</string>
     <string name="reverse_audio">Reverse audio</string>
+    <string name="open_source">Open source</string>
 </resources>

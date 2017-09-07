@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -252,7 +253,7 @@ public class MyRevActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     PopupMenu popupMenu = new PopupMenu(MyRevActivity.this, holder.getImageView());
-                    popupMenu.inflate(R.menu.menu_pk_list_item_actions);
+                    popupMenu.inflate(R.menu.menu_my_list_item_actions);
                     popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem menuItem) {
@@ -435,6 +436,16 @@ public class MyRevActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.action_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
         }
+        if (item.getItemId() == R.id.open_source) {
+            Intent intent = new Intent();
+            intent.setAction("android.intent.action.VIEW");
+            // HARD CODE @FIXME
+            Uri content_url = Uri.parse("https://github.com/Tornaco/Reverse");
+            intent.setData(content_url);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
