@@ -38,7 +38,7 @@ public class LoadRequestDispatcherTornaco implements RequestDispatcher {
 
     public LoadRequestDispatcherTornaco(int poolSize) {
         this.proxy = new LoaderProxy();
-        this.executorService = Executors.newFixedThreadPool(poolSize);
+        this.executorService = Executors.newScheduledThreadPool(poolSize);
         this.displayRequestDispatcher = DisplayRequestDispatcherTornaco.getInstance();
     }
 

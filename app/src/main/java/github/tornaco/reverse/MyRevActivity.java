@@ -19,6 +19,7 @@ import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +52,9 @@ public class MyRevActivity extends AppCompatActivity {
     private SwipeRefreshLayout swipeRefreshLayout;
     private Adapter adapter;
 
+    private View statusViewContainer;
+    private TextView statusView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,9 +65,7 @@ public class MyRevActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (requestPermission()) {
-            startLoading();
-        }
+        waitForFFMPEGLoading();
     }
 
     @Getter
@@ -103,6 +105,8 @@ public class MyRevActivity extends AppCompatActivity {
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe);
         swipeRefreshLayout.setColorSchemeColors(getResources().getIntArray(R.array.polluted_waves));
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        statusViewContainer = findViewById(R.id.status_container);
+        statusView = (TextView) findViewById(R.id.status_view);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -118,6 +122,38 @@ public class MyRevActivity extends AppCompatActivity {
         });
     }
 
+    private void waitForFFMPEGLoading() {
+        swipeRefreshLayout.setRefreshing(true);
+        statusView.setText(null);
+        final ReverseApp reverseApp = (ReverseApp) getApplication();
+        AsyncTask.THREAD_POOL_EXECUTOR.execute(new Runnable() {
+            @Override
+            public void run() {
+                reverseApp.waitForLoadComplete();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        onFFMPEGLoadComplete(reverseApp.isFfmpegReady());
+                    }
+                });
+            }
+        });
+    }
+
+    private void onFFMPEGLoadComplete(boolean ffmpegReady) {
+        swipeRefreshLayout.setRefreshing(false);
+        statusViewContainer.setVisibility(View.GONE);
+        if (ffmpegReady) {
+            statusView.setText(R.string.ready_to_reverse);
+            if (requestPermission()) {
+                startLoading();
+            }
+        } else {
+            statusView.setText(R.string.not_ready_to_reverse);
+            statusViewContainer.setVisibility(View.VISIBLE);
+        }
+    }
+
     private void startLoading() {
         swipeRefreshLayout.setRefreshing(true);
         new VideoLoader(this).loadAsync(new VideoLoader.Callback() {
@@ -126,8 +162,13 @@ public class MyRevActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        adapter.update(videos);
                         swipeRefreshLayout.setRefreshing(false);
+                        adapter.update(videos);
+                        if (videos.size() > 0) {
+                            statusViewContainer.setVisibility(View.GONE);
+                        } else {
+                            statusViewContainer.setVisibility(View.VISIBLE);
+                        }
                     }
                 });
             }
@@ -192,7 +233,7 @@ public class MyRevActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onBindViewHolder(final VideoViewHolder holder, int position) {
+        public void onBindViewHolder(final VideoViewHolder holder, final int position) {
             final Video video = data.get(position);
             holder.getTitleView().setText(video.getName());
             // holder.getDescriptionView().setText(getString(R.string.video_path, video.getPath()));
@@ -211,13 +252,13 @@ public class MyRevActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     PopupMenu popupMenu = new PopupMenu(MyRevActivity.this, holder.getImageView());
-                    popupMenu.inflate(R.menu.menu_list_item_actions);
+                    popupMenu.inflate(R.menu.menu_pk_list_item_actions);
                     popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem menuItem) {
                             switch (menuItem.getItemId()) {
-                                case R.id.action_reverse:
-                                    onRequestReverse(video);
+                                case R.id.action_delete:
+                                    onRequestDelete(video);
                                     break;
                                 case R.id.action_view:
                                     startActivity(MediaTools.buildOpenIntent(MyRevActivity.this, new File(video.getPath())));
@@ -239,6 +280,40 @@ public class MyRevActivity extends AppCompatActivity {
             return data.size();
         }
 
+    }
+
+    private void onRequestDelete(final Video video) {
+        AsyncTask.THREAD_POOL_EXECUTOR.execute(new Runnable() {
+            @Override
+            public void run() {
+                if (new File(video.getPath()).delete()) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Snackbar.make(recyclerView, getString(R.string.delete_success),
+                                    Snackbar.LENGTH_SHORT)
+                                    .show();
+                        }
+                    });
+                } else {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Snackbar.make(recyclerView, getString(R.string.delete_fail),
+                                    Snackbar.LENGTH_SHORT)
+                                    .show();
+                        }
+                    });
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Reload when delete fail.
+                        startLoading();
+                    }
+                });
+            }
+        });
     }
 
     private void onRequestReverse(Video video) {
@@ -353,6 +428,20 @@ public class MyRevActivity extends AppCompatActivity {
                 startActivity(MediaTools.buildSharedIntent(this, new File(path)));
                 break;
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_settings) {
+            startActivity(new Intent(this, SettingsActivity.class));
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.my_rev, menu);
+        return true;
     }
 
     /**

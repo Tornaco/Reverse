@@ -107,6 +107,9 @@ public class VideoLoader {
 
         File reversedDir = new File(SettingsProvider.get().getString(SettingsProvider.Key.OUTPUT_DIR));
 
+        // Check file.
+        if (!new File(path).exists()) return null;
+
         if (fromPutput && !reversedDir.equals(new File(path).getParentFile())) {
             Logger.i("Not fromPutput: %s", path);
             return null;

@@ -65,7 +65,13 @@ public class ImageSource implements Cloneable {
 
     @Override
     public int hashCode() {
-        return url.hashCode();
+        int effectCode = 0;
+        if (effect != null) {
+            for (ImageEffect e : effect) {
+                effectCode += e.getClass().getName().hashCode();
+            }
+        }
+        return url.hashCode() + placeHolder + fallback + effectCode;
     }
 
     public enum SourceType {

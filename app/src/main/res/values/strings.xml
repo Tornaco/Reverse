@@ -14,4 +14,10 @@
     <string name="picker_name">Pick video</string>
     <string name="my_reverse">Reversed</string>
     <string name="video_length">Length: %1$s</string>
+    <string name="action_delete">Delete</string>
+    <string name="delete_success">Video has been deleted</string>
+    <string name="delete_fail">Fail delete this video</string>
+    <string name="ready_to_reverse">Ready to reverse</string>
+    <string name="not_ready_to_reverse">Something error:(</string>
+    <string name="reverse_audio">Reverse audio</string>
 </resources>

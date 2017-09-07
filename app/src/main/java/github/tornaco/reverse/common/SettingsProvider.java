@@ -3,6 +3,7 @@ package github.tornaco.reverse.common;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 
 import com.google.common.io.Files;
 
@@ -19,9 +20,8 @@ public class SettingsProvider extends Observable {
 
     private static SettingsProvider sMe;
 
-    private static final String PREF_NAME = "rev_app_settings";
-
     public enum Key {
+        REVERSE_AUDIO(true),
         OUTPUT_DIR(Environment.getExternalStorageDirectory().getPath() + File.separator
                 + Environment.DIRECTORY_PICTURES + File.separator + "Reversed");
 
@@ -41,7 +41,7 @@ public class SettingsProvider extends Observable {
     }
 
     private SettingsProvider(Context context) {
-        this.pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        this.pref = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     public static void init(Context context) {

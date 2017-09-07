@@ -175,7 +175,7 @@ public class PickerActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     PopupMenu popupMenu = new PopupMenu(PickerActivity.this, holder.getImageView());
-                    popupMenu.inflate(R.menu.menu_list_item_actions);
+                    popupMenu.inflate(R.menu.menu_pk_list_item_actions);
                     popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem menuItem) {
@@ -188,6 +188,9 @@ public class PickerActivity extends AppCompatActivity {
                                     break;
                                 case R.id.action_share:
                                     startActivity(MediaTools.buildSharedIntent(PickerActivity.this, new File(video.getPath())));
+                                    break;
+                                case R.id.action_delete:
+                                    onRequestDelete(video);
                                     break;
                             }
                             return true;
@@ -317,6 +320,40 @@ public class PickerActivity extends AppCompatActivity {
                 startActivity(MediaTools.buildSharedIntent(this, new File(path)));
                 break;
         }
+    }
+
+    private void onRequestDelete(final Video video) {
+        AsyncTask.THREAD_POOL_EXECUTOR.execute(new Runnable() {
+            @Override
+            public void run() {
+                if (new File(video.getPath()).delete()) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Snackbar.make(recyclerView, getString(R.string.delete_success),
+                                    Snackbar.LENGTH_SHORT)
+                                    .show();
+                        }
+                    });
+                } else {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Snackbar.make(recyclerView, getString(R.string.delete_fail),
+                                    Snackbar.LENGTH_SHORT)
+                                    .show();
+                        }
+                    });
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Reload when delete fail.
+                        startLoading();
+                    }
+                });
+            }
+        });
     }
 
     @Override
