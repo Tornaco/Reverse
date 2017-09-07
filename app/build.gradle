@@ -50,6 +50,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     provided 'org.projectlombok:lombok:1.16.16'
     apt "org.projectlombok:lombok:1.16.16"
-    compile project(':tiles')
     compile project(':vangoghcore')
 }

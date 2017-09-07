@@ -1,1 +1,1 @@
-include ':app', ':vangoghcore', ':tiles'
+include ':app', ':vangoghcore'
