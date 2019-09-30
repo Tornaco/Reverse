@@ -1,28 +1,14 @@
-name: Android CI
-
-on: [push]
-
+on: release
+name: Handle Release
 jobs:
-  build:
-
+  upload:
+    name: Upload Artifacts
     runs-on: ubuntu-latest
-    
     steps:
-    - uses: actions/checkout@v1
-
-    - name: build
-      uses: xdtianyu/actions-android-ci@master
-      with: 
-        args: '"
-        source .travis/env.sh;
-        source /opt/setup-android-sdk.sh;
-        export KEYSTORE_PASS=${{ secrets.KEYSTORE_PASS }};
-        export ALIAS_NAME=${{ secrets.ALIAS_NAME }};
-        export ALIAS_PASS=${{ secrets.ALIAS_PASS }};
-        ./gradlew :app:assembleDebug
-        "'
-        
-    - name: Publish
-      uses: JasonEtco/upload-to-release@master
-      args: README.md
-      secrets: ${{ secrets.GITHUB_TOKEN }}
+    - uses: actions/checkout@master
+    - name: Upload
+      uses: skx/github-action-publish-binaries@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        args: 'README.md'
