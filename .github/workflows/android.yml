@@ -11,4 +11,4 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        args: 'README.md'
+        args: '**/AndroidManifest.xml'
